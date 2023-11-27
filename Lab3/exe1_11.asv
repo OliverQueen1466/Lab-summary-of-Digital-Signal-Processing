@@ -1,0 +1,23 @@
+function exe1_11()
+[x,Fs]=audioread('speech_female.wav');
+x = x(:,1);
+x = x';
+N = length(x);
+n = 0 : N-1;
+t = (0:N-1)/Fs;
+y = fft(x(1:Fs * 1.4));
+% f = Fs/N*(0:round(N/2)-1);
+f1=n*Fs/N
+subplot(211);plot(f1(1:length(y)),y);
+[N, Wn] = buttord(1/5, 1/4, 1, 40);
+[b,a] = butter(N,1/4,'low');
+xf = filter(b,a,x);
+y1 = fft(xf(1:5:end))
+f2=n*Fs/N
+plot(t(1:5:Fs * 1.4),xf(1:5:Fs*1.4),'g');
+subplot(212);plot()
+
+
+% xlabel('Time/s');ylabel('Amplitude');
+% title('Downsample Signal');
+% grid;

@@ -1,0 +1,24 @@
+function exe1_4()
+x = zeros(1,512)
+for i = 1 : 512
+    for j = 0 : 9
+        x(i) = x(i) + rand(1) * cos(2* pi * rand(1) * i + 2 * pi *rand(1));
+    end
+end
+a1 = (2 ^ (-0.5)) .* [1 1];
+a2 = (2 ^ (-0.5)) .* [1 -1];
+b = [0 1];
+han = hann(512);
+for i = 1:512
+    han_win(i) = han(i) * x(i);
+end
+FT=fft(han_win,1024);
+f=(0:Ndata-1)*fs/Ndata;
+ydb = 20 * log10(abs(FT)./max(abs(FT)));
+a = ones(1,100)
+x1 = filter(b,a1,x);
+x2 = filter(b,a2,x);
+scal = (x1 + x2) ./ x;
+plot(a(1:100));title('First hundred smaples')
+% fs = 0 :1/2048:0.5-1/2048
+% subplot(2,1,2);plot(fs,ydb);xlabel('Normalized Frequency');ylabel('Magnitude(dB)');axis([0 0.5 -60 0])

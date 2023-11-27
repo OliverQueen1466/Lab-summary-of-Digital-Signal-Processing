@@ -1,0 +1,25 @@
+function exe2_2()
+% N=input('请输入FFT的变换区间长度N:\n');   %  N=16 32 64
+N = 1024;
+fs = 1
+f=(0:N-1)*fs/N; 
+n=0:N-1;
+x1 = [0.00506, 0, -0.04194, 0, 0.28848, 0.49679, 0.28848, 0, -0.04194, 0, 0.00506]
+y1=fft(x1,N);
+subplot(2,1,1);
+n=0:N-1;
+mag = 20 * log10(abs(y1) ./ max(abs(y1)))
+T = ones(1,N) .* (11 - 1) ./ (2 * 1024)
+subplot(2,2,1); stem(f(1:N/2),T(1:N/2),)
+xlabel('Normalized frequency')
+ylabel('Group delay')
+subplot(2,2,2);
+stem(f(1:N/2),mag(1:N/2)*2/N); 
+title('Magnitude response');
+xlabel('Normalized Frequency');
+ylabel('dB');
+subplot(2,2,[3 4]);
+stem(f(1:N/2),angle(y1(1:N/2)),'.');
+title('phase response');
+xlabel('Normalized Frequency');
+ylabel('arg');
